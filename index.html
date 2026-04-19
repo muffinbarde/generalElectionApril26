@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>April 2026 General Election</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --logo-green: #5DA818;
+            --brand-green: #84DB52;
+            --gold: #FF9C18;
+            --err-red: #ef4444;
+            --neutral-bg: #f1f5f9;
+            --neutral-border: #cbd5e1;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-family: 'Inter', sans-serif;
+            overflow-y: scroll;
+        }
+
+        .header-brand {
+            background: linear-gradient(135deg, var(--logo-green) 0%, #4a8613 100%);
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .nav-btn {
+            font-weight: 800;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: 0.2s;
+            color: rgba(255,255,255,0.7);
+        }
+
+            .nav-btn:hover {
+                color: white;
+            }
+
+            .nav-btn.active {
+                color: white;
+                background: rgba(255,255,255,0.15);
+            }
+
+        .badge-win {
+            background-color: var(--gold);
+            color: white;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .badge-pending {
+            background-color: #94a3b8;
+            color: white;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .ref-pass {
+            border-left: 8px solid var(--logo-green);
+        }
+
+        .ref-fail {
+            border-left: 8px solid var(--err-red);
+        }
+
+        .status-pill-pass {
+            background: #dcfce7;
+            color: #166534;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .status-pill-fail {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .round-tab {
+            cursor: pointer;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #94a3b8;
+        }
+
+            .round-tab.active {
+                background: var(--logo-green);
+                color: white;
+                border-color: var(--logo-green);
+            }
+    </style>
+</head>
+<body>
+
+    <header class="header-brand text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                <div class="w-8 h-8 bg-white rounded flex items-center justify-center">
+                    <div class="w-5 h-5 rounded-full" style="background-color: var(--logo-green);"></div>
+                </div>
+                <h1 class="text-xl font-black italic tracking-tighter uppercase">April 2026 General Election</h1>
+            </div>
+            <nav class="flex space-x-1">
+                <button onclick="view('overview')" id="btn-overview" class="nav-btn active text-sm">Overview</button>
+                <button onclick="view('districts')" id="btn-districts" class="nav-btn text-sm">Districts</button>
+                <button onclick="view('atlarge')" id="btn-atlarge" class="nav-btn text-sm">At-Large</button>
+                <button onclick="view('referendums')" id="btn-referendums" class="nav-btn text-sm">Referendums</button>
+                <button onclick="view('audit')" id="btn-audit" class="nav-btn text-sm">Spoilt Votes</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+
+        <div id="view-overview" class="space-y-8">
+            <div class="flex justify-between items-end border-b-2 border-slate-200 pb-2">
+                <h2 class="text-3xl font-black uppercase italic text-slate-800">Current Standings</h2>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest">District Leaders</h3>
+                    <div id="overview-districts" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest">At-Large Representatives</h3>
+                    <div id="overview-atlarge" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-districts" class="hidden space-y-6">
+            <div class="flex items-center justify-between bg-white p-4 rounded-xl border">
+                <div class="flex items-center space-x-3">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Viewing:</span>
+                    <select id="districtSelect" onchange="renderDistrictDetail()" class="font-black text-xl text-logo-green outline-none bg-transparent"></select>
+                </div>
+                <div id="round-selector" class="flex gap-2"></div>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest">District Candidates</h3>
+                <div id="district-detail" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
+                <div class="space-y-4">
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest">District At-Large Vote Breakdown</h3>
+                    <div id="district-atlarge-breakdown" class="card p-6 space-y-4"></div>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest">District Referendum Support</h3>
+                    <div id="district-ref-breakdown" class="space-y-4"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-atlarge" class="hidden space-y-8">
+            <div class="border-b-2 border-slate-200 pb-2">
+                <h2 class="text-3xl font-black uppercase italic text-slate-800">At-Large Results</h2>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-1 space-y-4">
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest">Total Popular Vote</h3>
+                    <div id="atlarge-stats" class="space-y-6 p-6 card"></div>
+                </div>
+                <div class="lg:col-span-2 space-y-4">
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest">Final At-Large List</h3>
+                    <div id="atlarge-winners" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-referendums" class="hidden space-y-8">
+            <div class="border-b-2 border-slate-200 pb-2">
+                <h2 class="text-3xl font-black uppercase italic text-slate-800">Ballot Measures</h2>
+            </div>
+            <div id="referendum-container" class="space-y-6 max-w-5xl mx-auto"></div>
+        </div>
+
+        <div id="view-audit" class="hidden space-y-8">
+            <div class="border-b-2 border-slate-200 pb-2">
+                <h2 class="text-3xl font-black uppercase italic text-slate-800">Spoilt Votes</h2>
+            </div>
+            <div id="audit-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        </div>
+
+    </main>
+
+    <script>
+        const partyColors = {
+            "Rights to All Booze": "#990012", "Aurora Party": "#5170ff", "Harlon Progress Party": "#74209a", "New Initiative": "#004b47", "Independent": "#64748b", "Default": "#94a3b8" };
+        const manualAtLargeWinners = [];
+        const manualAtLargeVotes = {  };
+        const referendums = [
+            {
+                title: "Constitutional Amendment Procedure Referendum", question: "Do you support amending the Constitution to allow constitutional amendments to be passed by a two-thirds majority in both the House of Assembly and the Senate, without requiring a national referendum?", yes: 0, no: 0, threshold: 0.5 },
+            { title: "Electoral Districts Implementation Referendum", question: "Should the Republic allow for proportional local districts within a proportionally representative system?", yes: 0, no: 0, threshold: 0.6666 }
+        ];
+
+        const districts = [
+            {
+                name: "City Centre",
+                id: "cc",
+                irvRounds: [
+                ],
+                atLargeVotes: { "Rights to All Booze": 13000, "Harlon Progress Party": 10500, "New Initiative": 2100 },
+                referendumVotes: [{ title: "Prop 1", yes: 15000, no: 8000 }, { title: "Prop 2", yes: 9000, no: 14000 }],
+                spoiltBallots: [
+                ]
+            },
+            {
+                name: "Harlon South - Long Island",
+                id: "hsli",
+                irvRounds: [
+                ],
+                atLargeVotes: { "Party A": 13000, "Party B": 10500, "Party C": 2100, "Independent": 400 },
+                referendumVotes: [{ title: "Prop 1", yes: 15000, no: 8000 }, { title: "Prop 2", yes: 9000, no: 14000 }]
+            },
+            {
+                name: "Outer Isles",
+                id: "oi",
+                irvRounds: [
+                ],
+                atLargeVotes: { "Party A": 13000, "Party B": 10500, "Party C": 2100, "Independent": 400 },
+                referendumVotes: [{ title: "Prop 1", yes: 15000, no: 8000 }, { title: "Prop 2", yes: 9000, no: 14000 }]
+            },
+            {
+                name: "Scyllia - Harlon North",
+                id: "shn",
+                irvRounds: [
+                ],
+                atLargeVotes: { "Party A": 13000, "Party B": 10500, "Party C": 2100, "Independent": 400 },
+                referendumVotes: [{ title: "Prop 1", yes: 15000, no: 8000 }, { title: "Prop 2", yes: 9000, no: 14000 }]
+            },
+            {
+                name: "Sealand",
+                id: "s",
+                irvRounds: [
+                ],
+                atLargeVotes: { "Party A": 13000, "Party B": 10500, "Party C": 2100, "Independent": 400 },
+                referendumVotes: [{ title: "Prop 1", yes: 15000, no: 8000 }, { title: "Prop 2", yes: 9000, no: 14000 }]
+            },
+            {
+                name: "Westlyn",
+                id: "w",
+                irvRounds: [
+                ],
+                atLargeVotes: { "Party A": 13000, "Party B": 10500, "Party C": 2100, "Independent": 400 },
+                referendumVotes: [{ title: "Prop 1", yes: 15000, no: 8000 }, { title: "Prop 2", yes: 9000, no: 14000 }]
+            }
+        ];
+
+        let currentRoundIdx = 0;
+
+        function getCol(p) { return partyColors[p] || partyColors["Default"]; }
+
+        function view(id) {
+            document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById('view-' + id).classList.remove('hidden');
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('btn-' + id).classList.add('active');
+
+            // Add this line:
+            if (id === 'audit') renderAudit();
+
+            if (id === 'overview') renderOverview();
+            if (id === 'districts') { currentRoundIdx = 0; renderDistrictDetail(); }
+            if (id === 'atlarge') renderAtLarge();
+            if (id === 'referendums') renderReferendums();
+            window.scrollTo(0, 0);
+        }
+
+        function renderOverview() {
+            document.getElementById('overview-districts').innerHTML = districts.map(d => {
+                const rounds = d.irvRounds || [];
+
+                // If there are no rounds, show "Results Pending"
+                if (rounds.length === 0) {
+                    return `<div class="card p-4 border-l-4 border-slate-300">
+                        <p class="text-[9px] font-black text-slate-400 uppercase">${d.name}</p>
+                        <p class="font-black text-slate-400 italic">Results Pending</p>
+                    </div>`;
+                }
+
+                // FIND THE HIGHEST ROUND NUMBER
+                // This scans all rounds and picks the one where "round" is the largest number
+                const latestRound = rounds.reduce((prev, current) => (prev.round > current.round) ? prev : current);
+
+                // Find the winner of that specific round
+                const win = [...latestRound.results].sort((a, b) => b.votes - a.votes)[0];
+
+                return `
+            <div class="card p-4 border-l-4" style="border-color: ${getCol(win.party)}">
+                <p class="text-[9px] font-black text-slate-400 uppercase">${d.name}</p>
+                <p class="font-black text-slate-800 truncate">${win.name}</p>
+                <div class="flex justify-between items-center mt-1">
+                    <span class="text-[10px] font-bold uppercase" style="color: ${getCol(win.party)}">${win.party}</span>
+                </div>
+            </div>`;
+            }).join('');
+
+            // Renders the At-Large list (this remains the same as your manual list)
+            document.getElementById('overview-atlarge').innerHTML = manualAtLargeWinners.map(w => `
+        <div class="card p-4 border-l-4" style="border-color: ${getCol(w.party)}">
+            <p class="text-[9px] font-black text-slate-400 uppercase">National representative</p>
+            <p class="font-black text-slate-800 truncate">${w.name}</p>
+            <p class="text-[10px] font-bold uppercase" style="color: ${getCol(w.party)}">${w.party}</p>
+        </div>`).join('');
+        }
+
+        function setRound(idx) { currentRoundIdx = idx; renderDistrictDetail(); }
+
+        function renderDistrictDetail() {
+            const sel = document.getElementById('districtSelect');
+            if (!sel.innerHTML) sel.innerHTML = districts.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+            const d = districts.find(dist => dist.id === sel.value);
+
+            const roundSel = document.getElementById('round-selector');
+            const rounds = d.irvRounds || [];
+
+            if (rounds.length === 0) {
+                roundSel.innerHTML = '<span class="text-[10px] font-bold text-slate-400 uppercase">Waiting for Data...</span>';
+                document.getElementById('district-detail').innerHTML = `<div class="col-span-full py-12 text-center card bg-slate-50 border-dashed border-2"><p class="text-slate-400 font-bold uppercase tracking-widest">No votes reported for this district yet.</p></div>`;
+                document.getElementById('district-atlarge-breakdown').innerHTML = '<p class="text-sm text-slate-400 italic">No national data.</p>';
+                document.getElementById('district-ref-breakdown').innerHTML = '<p class="text-sm text-slate-400 italic">No referendum data.</p>';
+                return;
+            }
+
+            if (rounds.length > 1) {
+                roundSel.innerHTML = rounds.map((r, i) => `<button onclick="setRound(${i})" class="round-tab ${currentRoundIdx === i ? 'active' : ''}">Round ${r.round}</button>`).join('');
+            } else { roundSel.innerHTML = ''; }
+
+            const currentRound = rounds[currentRoundIdx] || rounds[0];
+            const sorted = [...currentRound.results].sort((a, b) => b.votes - a.votes);
+
+            document.getElementById('district-detail').innerHTML = sorted.map((c, i) => `
+                    <div class="card p-6" style="${i === 0 ? `border: 2px solid ${getCol(c.party)}` : ''}">
+                        <div class="flex justify-between mb-2"><span class="text-[10px] font-bold uppercase" style="color: ${getCol(c.party)}">${c.party}</span>${i === 0 ? '<span class="badge-win">Leading</span>' : ''}</div>
+                        <h4 class="text-xl font-black text-slate-800">${c.name}</h4>
+                        <div class="text-4xl font-mono font-black mt-2" style="color: ${getCol(c.party)}">${c.votes.toLocaleString()}</div>
+                    </div>`).join('');
+
+            const alTotal = Object.values(d.atLargeVotes || {}).reduce((a, b) => a + b, 0);
+            if (alTotal > 0) {
+                document.getElementById('district-atlarge-breakdown').innerHTML = Object.entries(d.atLargeVotes).sort((a, b) => b[1] - a[1]).map(([p, v]) => {
+                    const perc = (v / alTotal * 100).toFixed(1);
+                    return `<div><div class="flex justify-between text-[10px] font-black mb-1 uppercase"><span>${p}</span><span>${perc}%</span></div>
+                                <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden"><div class="h-full" style="width: ${perc}%; background-color: ${getCol(p)}"></div></div></div>`;
+                }).join('');
+            }
+
+            if (d.referendumVotes && d.referendumVotes.length > 0) {
+                document.getElementById('district-ref-breakdown').innerHTML = d.referendumVotes.map((rv, index) => {
+                    const total = rv.yes + rv.no;
+                    const yesP = total > 0 ? (rv.yes / total * 100).toFixed(1) : 0;
+                    const mainRef = referendums[index] || { threshold: 0.5 };
+                    const isPass = total > 0 && (rv.yes / total) >= mainRef.threshold;
+                    return `<div class="card p-4"><div class="flex justify-between items-start mb-2"><div><span class="text-xs font-black text-slate-800 uppercase block">${rv.title}</span><span class="text-[9px] font-bold text-slate-400">GOAL: ${(mainRef.threshold * 100).toFixed(1)}%</span></div>
+                                <span class="text-[10px] font-bold ${isPass ? 'text-green-600' : 'text-red-600'} uppercase">${yesP}% — ${total > 0 ? (isPass ? 'Passing' : 'Failing') : 'No Data'}</span></div>
+                                <div class="w-full h-4 bg-slate-100 rounded overflow-hidden flex shadow-inner border border-slate-200"><div class="bg-green-500 h-full transition-all" style="width: ${yesP}%"></div><div class="bg-red-500 h-full transition-all" style="width: ${100 - yesP}%"></div></div></div>`;
+                }).join('');
+            }
+        }
+
+        function renderAtLarge() {
+            const total = Object.values(manualAtLargeVotes).reduce((a, b) => a + b, 0);
+            document.getElementById('atlarge-stats').innerHTML = Object.entries(manualAtLargeVotes).sort((a, b) => b[1] - a[1]).map(([party, votes]) => {
+                const perc = (votes / total * 100).toFixed(1);
+                return `<div class="mb-4"><div class="flex justify-between text-[10px] font-black mb-1"><span>${party}</span><span>${perc}%</span></div>
+                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden"><div class="h-full" style="width: ${perc}%; background-color: ${getCol(party)}"></div></div></div>`;
+            }).join('');
+            document.getElementById('atlarge-winners').innerHTML = manualAtLargeWinners.map(w => `<div class="card p-5 border-l-8" style="border-color: ${getCol(w.party)}"><p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">National representative</p><h4 class="text-xl font-black text-slate-800">${w.name}</h4><p class="text-xs font-bold uppercase" style="color: ${getCol(w.party)}">${w.party}</p></div>`).join('');
+        }
+
+        function renderReferendums() {
+            document.getElementById('referendum-container').innerHTML = referendums.map(r => {
+                const total = r.yes + r.no;
+                const yesP = (r.yes / total * 100).toFixed(1);
+                const isPass = (r.yes / total) >= r.threshold;
+                return `<div class="card p-8 ${isPass ? 'ref-pass' : 'ref-fail'}"><div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-6"><div class="max-w-2xl"><div class="flex items-center gap-3 mb-2"><span class="${isPass ? 'status-pill-pass' : 'status-pill-fail'}">${isPass ? '✓ Passing' : '✕ Failing'}</span><span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Goal: ${(r.threshold * 100).toFixed(1)}% Required</span></div><h3 class="text-2xl font-black text-slate-800">${r.title}</h3><p class="text-slate-500 mt-2 text-sm italic">${r.question}</p></div><div class="text-right font-mono"><p class="text-[10px] font-black text-slate-400 uppercase">Total Votes</p><p class="text-2xl font-black">${total.toLocaleString()}</p></div></div><div class="relative pt-2"><div class="flex justify-between mb-2"><div class="text-left"><span class="block text-xs font-black text-slate-400 uppercase">Yes</span><span class="text-3xl font-black ${isPass ? 'text-green-600' : 'text-slate-400'}">${yesP}%</span></div><div class="text-right"><span class="block text-xs font-black text-slate-400 uppercase">No</span><span class="text-3xl font-black ${!isPass ? 'text-red-600' : 'text-slate-400'}">${(100 - yesP).toFixed(1)}%</span></div></div><div class="w-full h-8 bg-slate-100 rounded-full overflow-hidden flex border border-slate-200"><div class="h-full ${isPass ? 'bg-green-500' : 'bg-slate-400'}" style="width: ${yesP}%"></div><div class="h-full ${!isPass ? 'bg-red-500' : 'bg-slate-300'}" style="width: ${100 - yesP}%"></div></div></div></div>`;
+            }).join('');
+        }
+
+        function renderAudit() {
+            document.getElementById('audit-container').innerHTML = districts.map(d => {
+                const ballots = d.spoiltBallots || [];
+                const signedCount = ballots.filter(b => b.bookStatus === "Signed").length;
+                const unsignedCount = ballots.filter(b => b.bookStatus === "Unsigned").length;
+
+                return `
+            <div class="card p-6 col-span-full border-t-4 border-slate-800 mb-8">
+                <div class="flex flex-col md:flex-row justify-between items-start mb-6 gap-4">
+                    <div>
+                        <h3 class="text-2xl font-black text-slate-800 uppercase">${d.name}</h3>
+                        <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">Official Senate Record of Spoiled Votes</p>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="text-center px-4 py-2 bg-slate-100 rounded-lg">
+                            <p class="text-[10px] font-black text-slate-500 uppercase">Signed Books</p>
+                            <p class="text-xl font-black text-slate-800">${signedCount}</p>
+                        </div>
+                        <div class="text-center px-4 py-2 bg-slate-100 rounded-lg">
+                            <p class="text-[10px] font-black text-slate-500 uppercase">Other items</p>
+                            <p class="text-xl font-black text-slate-800">${unsignedCount}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b-2 border-slate-200 bg-slate-50">
+                                <th class="py-3 text-[10px] font-black uppercase text-slate-500 px-4">Spoilt Scope</th>
+                                <th class="py-3 text-[10px] font-black uppercase text-slate-500 px-4">Ballot Content</th>
+                                <th class="py-3 text-[10px] font-black uppercase text-slate-500 px-4">Status</th>
+                                <th class="py-3 text-[10px] font-black uppercase text-slate-500 px-4">Justification</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            ${ballots.map(b => {
+                    // Split scope by comma and create small badges
+                    const scopeBadges = b.scope.split(',').map(s =>
+                        `<span class="inline-block bg-slate-800 text-white text-[9px] font-black px-1.5 py-0.5 rounded mr-1 mb-1 uppercase">${s.trim()}</span>`
+                    ).join('');
+
+                    return `
+                                <tr class="border-b border-slate-100 hover:bg-slate-50">
+                                    <td class="py-4 px-4 whitespace-nowrap">${scopeBadges}</td>
+                                    <td class="py-4 px-4 font-medium text-slate-700">${b.content}</td>
+                                    <td class="py-4 px-4">
+                                        <span class="px-2 py-1 rounded text-[10px] font-black uppercase ${b.bookStatus === 'Signed' ? 'bg-blue-100 text-blue-700' : 'bg-slate-200 text-slate-600'}">
+                                            ${b.bookStatus}
+                                        </span>
+                                    </td>
+                                    <td class="py-4 px-4 text-slate-500 italic">${b.justification}</td>
+                                </tr>
+                            `}).join('')}
+                        </tbody>
+                    </table>
+                    ${ballots.length === 0 ? '<p class="py-8 text-center text-slate-400 italic">No spoiled votes recorded for this district.</p>' : ''}
+                </div>
+            </div>`;
+            }).join('');
+        }
+
+        view('overview');
+    </script>
+</body>
+</html>
