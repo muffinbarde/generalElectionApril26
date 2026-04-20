@@ -373,7 +373,7 @@
             if (alTotal > 0) {
                 document.getElementById('district-atlarge-breakdown').innerHTML = Object.entries(d.atLargeVotes).sort((a, b) => b[1] - a[1]).map(([p, v]) => {
                     const perc = (v / alTotal * 100).toFixed(1);
-                    return `<div><div class="flex justify-between text-[10px] font-black mb-1 uppercase"><span>${p}</span><span>${perc}%</span></div>
+                    return `<div><div class="flex justify-between text-[10px] font-black mb-1 uppercase"><span>${p}</span><span>${v} (${perc}%)</span></div>
                                 <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden"><div class="h-full" style="width: ${perc}%; background-color: ${getCol(p)}"></div></div></div>`;
                 }).join('');
             }
@@ -386,7 +386,7 @@
                     const isPass = total > 0 && (rv.yes / total) >= mainRef.threshold;
                     return `<div class="card p-4"><div class="flex justify-between items-start mb-2"><div><span class="text-xs font-black text-slate-800 uppercase block">${rv.title}</span><span class="text-[9px] font-bold text-slate-400">GOAL: ${(mainRef.threshold * 100).toFixed(1)}%</span></div>
                                 <span class="text-[10px] font-bold ${isPass ? 'text-green-600' : 'text-red-600'} uppercase">${yesP}% — ${total > 0 ? (isPass ? 'Passing' : 'Failing') : 'No Data'}</span></div>
-                                <div class="w-full h-4 bg-slate-100 rounded overflow-hidden flex shadow-inner border border-slate-200"><div class="bg-green-500 h-full transition-all" style="width: ${yesP}%"></div><div class="bg-red-500 h-full transition-all" style="width: ${100 - yesP}%"></div></div></div>`;
+                                <div class="w-full h-4 bg-slate-100 rounded overflow-hidden flex shadow-inner border border-slate-200"><div class="bg-green-500 h-full transition-all" style="width: ${yesP}%;font-size:7pt;color:white"><center>${rv.yes}</center></div><div class="bg-red-500 h-full transition-all" style="width: ${100 - yesP}%;font-size:7pt;color:white"><center>${rv.yes}</center></div></div></div>`;
                 }).join('');
             }
         }
@@ -395,7 +395,7 @@
             const total = Object.values(manualAtLargeVotes).reduce((a, b) => a + b, 0);
             document.getElementById('atlarge-stats').innerHTML = Object.entries(manualAtLargeVotes).sort((a, b) => b[1] - a[1]).map(([party, votes]) => {
                 const perc = (votes / total * 100).toFixed(1);
-                return `<div class="mb-4"><div class="flex justify-between text-[10px] font-black mb-1"><span>${party}</span><span>${perc}%</span></div>
+                return `<div class="mb-4"><div class="flex justify-between text-[10px] font-black mb-1"><span>${party}</span><span>${votes} (${perc}%)</span></div>
                         <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden"><div class="h-full" style="width: ${perc}%; background-color: ${getCol(party)}"></div></div></div>`;
             }).join('');
             document.getElementById('atlarge-winners').innerHTML = manualAtLargeWinners.map(w => `<div class="card p-5 border-l-8" style="border-color: ${getCol(w.party)}"><p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">National representative</p><h4 class="text-xl font-black text-slate-800">${w.name}</h4><p class="text-xs font-bold uppercase" style="color: ${getCol(w.party)}">${w.party}</p></div>`).join('');
