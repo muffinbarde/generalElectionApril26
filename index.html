@@ -130,7 +130,8 @@
                 <h1 class="text-xl font-black italic tracking-tighter uppercase">April 2026 General Election</h1>
             </div>
             <nav class="flex space-x-1">
-                <button onclick="view('overview')" id="btn-overview" class="nav-btn active text-sm">Overview</button>
+                <button onclick="view('candidates')" id="btn-candidates" class="nav-btn text-sm">Candidates</button>
+                <button onclick="view('overview')" id="btn-overview" class="nav-btn active text-sm">House Composition</button>
                 <button onclick="view('districts')" id="btn-districts" class="nav-btn text-sm">Districts</button>
                 <button onclick="view('atlarge')" id="btn-atlarge" class="nav-btn text-sm">At-Large</button>
                 <button onclick="view('referendums')" id="btn-referendums" class="nav-btn text-sm">Referendums</button>
@@ -140,6 +141,26 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-6 py-8">
+        <div id="view-candidates" class="hidden space-y-8">
+
+            <div class="border-b-2 border-slate-200 pb-2">
+                <h2 class="text-3xl font-black uppercase italic text-slate-800">Candidates</h2>
+            </div>
+
+            <!-- 🔽 NEW FILTER BAR -->
+            <div class="card p-4 flex flex-col md:flex-row gap-4 items-center justify-between">
+
+                <div class="flex gap-2">
+                    <button onclick="setCandidateMode('all')" id="cand-all" class="round-tab active">All</button>
+                    <button onclick="setCandidateMode('district')" id="cand-district" class="round-tab">District</button>
+                    <button onclick="setCandidateMode('atlarge')" id="cand-atlarge" class="round-tab">At-Large</button>
+                </div>
+
+                <select id="candidateDistrictSelect" class="hidden border rounded px-2 py-1 text-sm"></select>
+            </div>
+
+            <div id="candidate-container" class="space-y-10 max-w-5xl mx-auto"></div>
+        </div>
 
         <div id="view-overview" class="space-y-8">
             <div class="flex justify-between items-end border-b-2 border-slate-200 pb-2">
@@ -285,7 +306,42 @@
             }
         ];
 
+        const manualCandidates = [
+            { name: "CodeWiz", party: "AP", list: "Harlon Progress Party", districts: ["cc"], atLarge: true },
+            { name: "NicheGuy", party: "HPP", list: "Harlon Progress Party", districts: ["s"], atLarge: true },
+            { name: "karevilen", party: "HPP", list: "Harlon Progress Party", districts: ["hsli"], atLarge: true },
+            { name: "BobbyHubbeltins", party: "AP", list: "Harlon Progress Party", districts: ["w"], atLarge: true },
+            { name: "Pro_Of_Survival", party: "HPP", list: "Harlon Progress Party", districts: ["shn"], atLarge: true },
+            { name: "Bp_39", party: "HPP", list: "Harlon Progress Party", atLarge: true },
+            { name: "MrSamster2000", party: "HPP", list: "Harlon Progress Party", atLarge: true },
+            { name: "PiOs67", party: "HPP", list: "Harlon Progress Party", atLarge: true },
+            { name: "MapleSyrup52", party: "HPP", list: "Harlon Progress Party", atLarge: true },
+            { name: "Westray", party: "HPP", list: "Harlon Progress Party", districts: ["oi"], atLarge: true },
+            { name: "yoshipie_", party: "HPP", list: "Harlon Progress Party", atLarge: true },
+
+            { name: "Janukiii_", party: "", list: "New Initiative", districts: ["shn"], atLarge: true },
+            { name: "Liam_Chan", party: "", list: "New Initiative", districts: ["w"], atLarge: true },
+            { name: "Chocolate_Rep", party: "", list: "New Initiative", atLarge: true },
+            { name: "DC165", party: "", list: "New Initiative", districts: ["hsli"], atLarge: true },
+            { name: "AstroCraft1", party: "", list: "New Initiative", districts: ["s"], atLarge: true },
+
+            { name: "Kr4ka", party: "", list: "Rights to All Booze", districts: ["shn", "oi"], atLarge: true },
+            { name: "veryreal_alex", party: "", list: "Rights to All Booze", districts: ["w"], atLarge: true },
+            { name: "doomcat327", party: "", list: "Rights to All Booze", atLarge: true },
+            { name: "macoemacoe1", party: "", list: "Rights to All Booze", districts: ["cc"], atLarge: true },
+            { name: "skepia", party: "", list: "Rights to All Booze", districts: ["hsli"], atLarge: true },
+            { name: "Its_novanut", party: "", list: "Rights to All Booze", atLarge: true },
+            { name: "Minezelum", party: "", list: "Rights to All Booze", atLarge: true },
+            { name: "WL607", party: "", list: "Rights to All Booze", atLarge: true },
+            { name: "ItsArnabCake", party: "", list: "Rights to All Booze", atLarge: true },
+            { name: "Anakinsteeve", party: "", list: "Rights to All Booze", atLarge: true },
+            { name: "_rovs_", party: "", list: "Rights to All Booze", atLarge: true },
+
+            { name: "Nexalin", party: "", list: "Independent", districts: ["cc", "hsli", "w", "shn", "oi"], atLarge: false }
+        ];
+
         let currentRoundIdx = 0;
+        let candidateMode = 'all';
 
         function getCol(p) { return partyColors[p] || partyColors["Default"]; }
 
@@ -298,12 +354,92 @@
             // Add this line:
             if (id === 'audit') renderAudit();
 
+            if (id === 'candidates') renderCandidates();
             if (id === 'overview') renderOverview();
             if (id === 'districts') { currentRoundIdx = 0; renderDistrictDetail(); }
             if (id === 'atlarge') renderAtLarge();
             if (id === 'referendums') renderReferendums();
             window.scrollTo(0, 0);
         }
+
+
+
+        function setCandidateMode(mode) {
+            candidateMode = mode;
+
+            document.querySelectorAll('[id^="cand-"]').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('cand-' + mode).classList.add('active');
+
+            const sel = document.getElementById('candidateDistrictSelect');
+
+            if (mode === 'district') {
+                sel.classList.remove('hidden');
+
+                if (!sel.innerHTML) {
+                    sel.innerHTML = districts.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+                }
+            } else {
+                sel.classList.add('hidden');
+            }
+
+            renderCandidates();
+        }
+
+        function renderCandidates() {
+            let list = [...manualCandidates];
+
+            if (candidateMode === 'district') {
+                const sel = document.getElementById('candidateDistrictSelect').value;
+
+                list = list.filter(c =>
+                    c.districts && c.districts.includes(sel)
+                );
+            }
+
+            if (candidateMode === 'atlarge') {
+                list = list.filter(c => c.atLarge);
+            }
+
+            // 🧠 Group by list (party block)
+            const grouped = {};
+
+            list.forEach(c => {
+                if (!grouped[c.list]) grouped[c.list] = [];
+                grouped[c.list].push(c);
+            });
+
+            document.getElementById('candidate-container').innerHTML =
+                Object.entries(grouped).map(([listName, candidates]) => `
+            <div class="card p-6">
+                <h3 class="text-xl font-black mb-4">${listName}</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    ${candidates.map((c, i) => `
+                        <div class="flex justify-between items-center bg-slate-50 border rounded px-3 py-2">
+                            <div class="flex gap-3 items-center">
+                                <span class="text-xs text-slate-400 font-black">${(c.list != 'Independent' && candidateMode != 'district') ? (i + 1) : ''}</span>
+                                <span class="font-bold">${c.name}</span>
+                            </div>
+                            <span class="text-xs uppercase font-bold text-slate-500">
+                                ${c.party}
+                            </span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
+
+            const sel = document.getElementById('candidateDistrictSelect');
+
+            if (sel && !sel.innerHTML) {
+                sel.innerHTML = districts.map(d =>
+                    `<option value="${d.id}">${d.name}</option>`
+                ).join('');
+            }
+        }
+
+        document.getElementById('candidateDistrictSelect')
+            .addEventListener('change', renderCandidates);
 
         function renderOverview() {
             document.getElementById('overview-districts').innerHTML = districts.map(d => {
@@ -503,7 +639,8 @@
             }).join('');
         }
 
-        view('overview');
+        view('candidates');
+        renderCandidates();
     </script>
 </body>
 </html>
