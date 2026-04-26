@@ -285,6 +285,12 @@
                         scope: "All",
                         bookStatus: "Signed",
                         justification: "Nothing was voted"
+                    },
+                    {
+                        content: "AT-LARGE<br>BAR<br><br>DISTRICT<br>skepia (Rank 1)<br><br>REFERENDUMS<br>Const. Amendment Procedure: yes<br>Electoral Districts Implementation: yes",
+                        scope: "All",
+                        bookStatus: "Unsigned",
+                        justification: "Ballot was not signed"
                     }
                 ]
             },
@@ -317,6 +323,12 @@
                         scope: "Referendums",
                         bookStatus: "Signed",
                         justification: "Referendum votes not counted"
+                    },
+                    {
+                        content: "Oak Sign",
+                        scope: "All",
+                        bookStatus: "Unsigned",
+                        justification: "It's an oak sign"
                     }
                 ]
             },
@@ -350,7 +362,15 @@
                 irvRounds: [
                 ],
                 atLargeVotes: { "Party A": 13000, "Party B": 10500, "Party C": 2100, "Independent": 400 },
-                referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 9, no: 1 }, { title: "Electoral Districts Implementation Referendum", yes: 8, no: 2 }]
+                referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 9, no: 1 }, { title: "Electoral Districts Implementation Referendum", yes: 8, no: 2 }],
+                spoiltBallots: [
+                    {
+                        content: "AT-LARGE<br>HPP<br><br>DISTRICT<br>BobbyHubbeltins (Rank 1)<br><br>REFERENDUMS<br>Const. Amendment Procedure: yes<br>Electoral Districts Implementation: no",
+                        scope: "All",
+                        bookStatus: "Unsigned",
+                        justification: "Ballot was not signed"
+                    }
+                ]
             }
         ];
 
