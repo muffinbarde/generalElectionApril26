@@ -245,7 +245,7 @@
             { name: "veryreal_alex", party: "Rights to All Booze"},
             { name: "doomcat327", party: "Rights to All Booze" },
             { name: "Janukiii_", party: "New Initiative" } ];
-        const manualAtLargeVotes = { "Harlon Progress Party": 11, "New Initiative": 9, "Rights to All Booze": 17, "Independent": 3 };
+        const manualAtLargeVotes = { "Harlon Progress Party": 14, "New Initiative": 13, "Rights to All Booze": 20, "Independent": 3 };
         const referendums = [
             {
                 title: "Constitutional Amendment Procedure Referendum", question: "Do you support amending the Constitution to allow constitutional amendments to be passed by a two-thirds majority in both the House of Assembly and the Senate, without requiring a national referendum?", yes: 59, no: 9, threshold: 0.5 },
@@ -455,8 +455,15 @@
                 id: "s",
                 noWinner: false,
                 irvRounds: [
+                    {
+                        round: 1,
+                        results: [
+                            { name: "NicheGuy", party: "Harlon Progress Party", votes: 5 },
+                            { name: "AstroCraft1", party: "New Initiative", votes: 4 }
+                        ]
+                    }
                 ],
-                atLargeVotes: { "Rights to All Booze": 3, "Harlon Progress Party": 4, "New Initiative": 6 },
+                atLargeVotes: { "Rights to All Booze": 3, "Harlon Progress Party": 3, "New Initiative": 4 },
                 referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 9, no: 1 }, { title: "Electoral Districts Implementation Referendum", yes: 8, no: 2 }],
                 spoiltBallots: [
                     {
@@ -470,6 +477,12 @@
                         scope: "All",
                         bookStatus: "Unsigned",
                         justification: "Ballot was not signed"
+                    },
+                    {
+                        content: "DISTRICT<br>AstroCraft1 (Rank 1)<br>NicheGuy (Rank 2)",
+                        scope: "District",
+                        bookStatus: "Signed",
+                        justification: "Not on voter roll"
                     }
                 ]
             },
