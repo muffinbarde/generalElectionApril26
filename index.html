@@ -243,8 +243,8 @@
         const manualAtLargeVotes = { "Harlon Progress Party": 0, "New Initiative": 0 , "Rights to All Booze": 0 };
         const referendums = [
             {
-                title: "Constitutional Amendment Procedure Referendum", question: "Do you support amending the Constitution to allow constitutional amendments to be passed by a two-thirds majority in both the House of Assembly and the Senate, without requiring a national referendum?", yes: 44, no: 4, threshold: 0.5 },
-            { title: "Electoral Districts Implementation Referendum", question: "Should the Republic allow for proportional local districts within a proportionally representative system?", yes: 37, no: 11, threshold: 0.6666 }
+                title: "Constitutional Amendment Procedure Referendum", question: "Do you support amending the Constitution to allow constitutional amendments to be passed by a two-thirds majority in both the House of Assembly and the Senate, without requiring a national referendum?", yes: 59, no: 9, threshold: 0.5 },
+            { title: "Electoral Districts Implementation Referendum", question: "Should the Republic allow for proportional local districts within a proportionally representative system?", yes: 47, no: 21, threshold: 0.6666 }
         ];
 
         const districts = [
@@ -255,8 +255,20 @@
                 irvRounds: [
                 ],
                 atLargeVotes: { "Rights to All Booze": 13000, "Harlon Progress Party": 10500, "New Initiative": 2100 },
-                referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 15000, no: 8000 }, { title: "Electoral Districts Implementation Referendum", yes: 9000, no: 14000 }],
+                referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 15, no: 5 }, { title: "Electoral Districts Implementation Referendum", yes: 10, no: 10 }],
                 spoiltBallots: [
+                    {
+                        content: "Referendums not filled out",
+                        scope: "Referendums",
+                        bookStatus: "Signed",
+                        justification: "Referendum votes not counted"
+                    },
+                    {
+                        content: "Referendums not filled out",
+                        scope: "Referendums",
+                        bookStatus: "Signed",
+                        justification: "Referendum votes not counted"
+                    }
                 ]
             },
             {
