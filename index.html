@@ -327,7 +327,21 @@
                 irvRounds: [
                 ],
                 atLargeVotes: { "Party A": 13000, "Party B": 10500, "Party C": 2100, "Independent": 400 },
-                referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 9, no: 1 }, { title: "Electoral Districts Implementation Referendum", yes: 8, no: 2 }]
+                referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 9, no: 1 }, { title: "Electoral Districts Implementation Referendum", yes: 8, no: 2 }],
+                spoiltBallots: [
+                    {
+                        content: "AT-LARGE<br>BAR<br><br>DISTRICT<br>NicheGuy (Rank 1)<br>AstroCraft1 (Rank 2)<br><br>REFERENDUMS<br>Const. Amendment Procedure: no<br>Electoral Districts Implementation: no",
+                        scope: "All",
+                        bookStatus: "Unsigned",
+                        justification: "Ballot was not signed"
+                    },
+                    {
+                        content: "AT-LARGE<br>HPP<br><br>DISTRICT<br>NicheGuy (Rank 1)<br>AstroCraft1 (Rank 2)<br><br>REFERENDUMS<br>Const. Amendment Procedure: no<br>Electoral Districts Implementation: yes",
+                        scope: "All",
+                        bookStatus: "Unsigned",
+                        justification: "Ballot was not signed"
+                    }
+                ]
             },
             {
                 name: "Westlyn",
