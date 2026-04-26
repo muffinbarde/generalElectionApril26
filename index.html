@@ -243,8 +243,8 @@
         const manualAtLargeVotes = { "Harlon Progress Party": 0, "New Initiative": 0 , "Rights to All Booze": 0 };
         const referendums = [
             {
-                title: "Constitutional Amendment Procedure Referendum", question: "Do you support amending the Constitution to allow constitutional amendments to be passed by a two-thirds majority in both the House of Assembly and the Senate, without requiring a national referendum?", yes: 24, no: 3, threshold: 0.5 },
-            { title: "Electoral Districts Implementation Referendum", question: "Should the Republic allow for proportional local districts within a proportionally representative system?", yes: 21, no: 6, threshold: 0.6666 }
+                title: "Constitutional Amendment Procedure Referendum", question: "Do you support amending the Constitution to allow constitutional amendments to be passed by a two-thirds majority in both the House of Assembly and the Senate, without requiring a national referendum?", yes: 33, no: 4, threshold: 0.5 },
+            { title: "Electoral Districts Implementation Referendum", question: "Should the Republic allow for proportional local districts within a proportionally representative system?", yes: 29, no: 8, threshold: 0.6666 }
         ];
 
         const districts = [
@@ -301,7 +301,7 @@
                 irvRounds: [
                 ],
                 atLargeVotes: { "Party A": 13000, "Party B": 10500, "Party C": 2100, "Independent": 400 },
-                referendumVotes: [{ title: "Prop 1", yes: 15000, no: 8000 }, { title: "Prop 2", yes: 9000, no: 14000 }]
+                referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 9, no: 1 }, { title: "Electoral Districts Implementation Referendum", yes: 8, no: 2 }]
             },
             {
                 name: "Westlyn",
@@ -647,8 +647,7 @@
             }).join('');
         }
 
-        view('candidates');
-        renderCandidates();
+        view('overview');
     </script>
 </body>
 </html>
