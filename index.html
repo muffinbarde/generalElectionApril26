@@ -244,8 +244,8 @@
             { name: "Kr4ka", party: "Rights to All Booze"},
             { name: "veryreal_alex", party: "Rights to All Booze"},
             { name: "doomcat327", party: "Rights to All Booze" },
-            { name: "Janukiii_", party: "New Initiative" } ];
-        const manualAtLargeVotes = { "Harlon Progress Party": 14, "New Initiative": 13, "Rights to All Booze": 20, "Independent": 3 };
+            { name: "Chocolate_Rep", party: "New Initiative" } ];
+        const manualAtLargeVotes = { "Harlon Progress Party": 14, "New Initiative": 14, "Rights to All Booze": 22};
         const referendums = [
             {
                 title: "Constitutional Amendment Procedure Referendum", question: "Do you support amending the Constitution to allow constitutional amendments to be passed by a two-thirds majority in both the House of Assembly and the Senate, without requiring a national referendum?", yes: 59, no: 9, threshold: 0.5 },
@@ -492,6 +492,12 @@
                 noWinner: false,
                 irvRounds: [
                     {
+                        round: 4,
+                        results: [
+                            { name: "Liam_Chan", party: "New Initiative", votes: 2 }
+                        ]
+                    },
+                    {
                         round: 3,
                         results: [
                             { name: "Liam_Chan", party: "New Initiative", votes: 2 },
@@ -516,7 +522,7 @@
                         ]
                     }
                 ],
-                atLargeVotes: { "Rights to All Booze": 4, "Harlon Progress Party": 1, "New Initiative": 2, "Independent": 3 },
+                atLargeVotes: { "Rights to All Booze": 6, "Harlon Progress Party": 1, "New Initiative": 3},
                 referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 9, no: 1 }, { title: "Electoral Districts Implementation Referendum", yes: 8, no: 2 }],
                 spoiltBallots: [
                     {
