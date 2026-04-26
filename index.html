@@ -241,12 +241,11 @@
             "Rights to All Booze": "#990012", "Aurora Party": "#5170ff", "Harlon Progress Party": "#74209a", "New Initiative": "#004b47", "Independent": "#64748b", "Default": "#94a3b8"};
         const manualAtLargeWinners = [
             { name: "CodeWiz", party: "Aurora Party"},
-            { name: "NicheGuy", party: "Harlon Progress Party" },
             { name: "Kr4ka", party: "Rights to All Booze"},
             { name: "veryreal_alex", party: "Rights to All Booze"},
-            { name: "doomcat327", party: "Rights to All Booze"},
-            { name: "macoemacoe1", party: "Rights to All Booze" } ];
-        const manualAtLargeVotes = { "Harlon Progress Party": 6, "New Initiative": 1 , "Rights to All Booze": 10 };
+            { name: "doomcat327", party: "Rights to All Booze" },
+            { name: "Janukiii_", party: "New Initiative" } ];
+        const manualAtLargeVotes = { "Harlon Progress Party": 7, "New Initiative": 3, "Rights to All Booze": 14, "Independent": 3 };
         const referendums = [
             {
                 title: "Constitutional Amendment Procedure Referendum", question: "Do you support amending the Constitution to allow constitutional amendments to be passed by a two-thirds majority in both the House of Assembly and the Senate, without requiring a national referendum?", yes: 59, no: 9, threshold: 0.5 },
@@ -443,8 +442,32 @@
                 id: "w",
                 noWinner: false,
                 irvRounds: [
+                    {
+                        round: 3,
+                        results: [
+                            { name: "Liam_Chan", party: "New Initiative", votes: 2 },
+                            { name: "Nexalin", party: "Independent", votes: 3 }
+                        ]
+                    },
+                    {
+                        round: 2,
+                        results: [
+                            { name: "Liam_Chan", party: "New Initiative", votes: 2 },
+                            { name: "veryreal_alex", party: "Rights to All Booze", votes: 1 },
+                            { name: "Nexalin", party: "Independent", votes: 2 }
+                        ]
+                    },
+                    {
+                        round: 1,
+                        results: [
+                            { name: "BobbyHubbeltins", party: "Aurora Party", votes: 0 },
+                            { name: "Liam_Chan", party: "New Initiative", votes: 2 },
+                            { name: "veryreal_alex", party: "Rights to All Booze", votes: 1 },
+                            { name: "Nexalin", party: "Independent", votes: 2 }
+                        ]
+                    }
                 ],
-                atLargeVotes: { "Party A": 13000, "Party B": 10500, "Party C": 2100, "Independent": 400 },
+                atLargeVotes: { "Rights to All Booze": 4, "Harlon Progress Party": 1, "New Initiative": 2, "Independent": 3 },
                 referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 9, no: 1 }, { title: "Electoral Districts Implementation Referendum", yes: 8, no: 2 }],
                 spoiltBallots: [
                     {
@@ -452,6 +475,36 @@
                         scope: "All",
                         bookStatus: "Unsigned",
                         justification: "Ballot was not signed"
+                    },
+                    {
+                        content: "DISTRICT<br>veryreal_alex (Rank 1)",
+                        scope: "District",
+                        bookStatus: "Signed",
+                        justification: "Not on voter roll"
+                    },
+                    {
+                        content: "DISTRICT<br>macoemacoe1 (Rank 1)<br>CodeWiz (Rank 2)<br>Nexalin (Rank 3)",
+                        scope: "District",
+                        bookStatus: "Signed",
+                        justification: "Ballot of wrong district / Is on voter roll of this district"
+                    },
+                    {
+                        content: "No district vote",
+                        scope: "District",
+                        bookStatus: "Signed",
+                        justification: "District vote not counted / Not on voter roll"
+                    },
+                    {
+                        content: "No district vote",
+                        scope: "District",
+                        bookStatus: "Signed",
+                        justification: "District vote not counted / Not on voter roll"
+                    },
+                    {
+                        content: "No district vote",
+                        scope: "District",
+                        bookStatus: "Signed",
+                        justification: "District vote not counted / Not on voter roll"
                     }
                 ]
             }
