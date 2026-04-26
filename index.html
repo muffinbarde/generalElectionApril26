@@ -245,7 +245,7 @@
             { name: "veryreal_alex", party: "Rights to All Booze"},
             { name: "doomcat327", party: "Rights to All Booze" },
             { name: "Janukiii_", party: "New Initiative" } ];
-        const manualAtLargeVotes = { "Harlon Progress Party": 7, "New Initiative": 3, "Rights to All Booze": 14, "Independent": 3 };
+        const manualAtLargeVotes = { "Harlon Progress Party": 11, "New Initiative": 9, "Rights to All Booze": 17, "Independent": 3 };
         const referendums = [
             {
                 title: "Constitutional Amendment Procedure Referendum", question: "Do you support amending the Constitution to allow constitutional amendments to be passed by a two-thirds majority in both the House of Assembly and the Senate, without requiring a national referendum?", yes: 59, no: 9, threshold: 0.5 },
@@ -390,8 +390,32 @@
                 id: "shn",
                 noWinner: false,
                 irvRounds: [
+                    {
+                        round: 3,
+                        results: [
+                            { name: "Pro_Of_Survival", party: "Harlon Progress Party", votes: 4 },
+                            { name: "Janukiii_", party: "New Initiative", votes: 6 }
+                        ]
+                    },
+                    {
+                        round: 2,
+                        results: [
+                            { name: "Pro_Of_Survival", party: "Harlon Progress Party", votes: 3 },
+                            { name: "Janukiii_", party: "New Initiative", votes: 6 },
+                            { name: "Kr4ka", party: "Rights to All Booze", votes: 2 }
+                        ]
+                    },
+                    {
+                        round: 1,
+                        results: [
+                            { name: "Pro_Of_Survival", party: "Harlon Progress Party", votes: 2 },
+                            { name: "Janukiii_", party: "New Initiative", votes: 6 },
+                            { name: "Kr4ka", party: "Rights to All Booze", votes: 2 },
+                            { name: "Nexalin", party: "Independent", votes: 1 }
+                        ]
+                    }
                 ],
-                atLargeVotes: { "Party A": 13000, "Party B": 10500, "Party C": 2100, "Independent": 400 },
+                atLargeVotes: { "Rights to All Booze": 3, "Harlon Progress Party": 4, "New Initiative": 6 },
                 referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 11, no: 0 }, { title: "Electoral Districts Implementation Referendum", yes: 8, no: 3 }],
                 spoiltBallots: [
                     {
@@ -411,6 +435,18 @@
                         scope: "All",
                         bookStatus: "Unsigned",
                         justification: "It's an oak sign"
+                    },
+                    {
+                        content: "DISTRICT<br>Janukiii_ (Rank 1)<br>Kr4ka (Rank 2)<br>Nexalin (Rank 3)<br>Pro_Of_Survival (Rank 4)",
+                        scope: "District",
+                        bookStatus: "Signed",
+                        justification: "Not on voter roll"
+                    },
+                    {
+                        content: "DISTRICT<br>Pro_Of_Survival (Rank 1)<br>Nexalin (Rank 2)<br>Janukiii_ (Rank 3)<br>Kr4ka (Rank 4)",
+                        scope: "District",
+                        bookStatus: "Signed",
+                        justification: "Not on voter roll"
                     }
                 ]
             },
@@ -420,7 +456,7 @@
                 noWinner: false,
                 irvRounds: [
                 ],
-                atLargeVotes: { "Party A": 13000, "Party B": 10500, "Party C": 2100, "Independent": 400 },
+                atLargeVotes: { "Rights to All Booze": 3, "Harlon Progress Party": 4, "New Initiative": 6 },
                 referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 9, no: 1 }, { title: "Electoral Districts Implementation Referendum", yes: 8, no: 2 }],
                 spoiltBallots: [
                     {
