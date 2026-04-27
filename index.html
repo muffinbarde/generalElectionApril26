@@ -245,11 +245,11 @@
             { name: "doomcat327", party: "Rights to All Booze" },
             { name: "macoemacoe1", party: "Rights to All Booze" },
             { name: "Its_novanut", party: "Rights to All Booze" } ];
-        const manualAtLargeVotes = { "Harlon Progress Party": 21, "New Initiative": 15, "Rights to All Booze": 36};
+        const manualAtLargeVotes = { "Harlon Progress Party": 21, "New Initiative": 15, "Rights to All Booze": 35};
         const referendums = [
             {
-                title: "Constitutional Amendment Procedure Referendum", question: "Do you support amending the Constitution to allow constitutional amendments to be passed by a two-thirds majority in both the House of Assembly and the Senate, without requiring a national referendum?", yes: 59, no: 9, threshold: 0.5 },
-            { title: "Electoral Districts Implementation Referendum", question: "Should the Republic allow for proportional local districts within a proportionally representative system?", yes: 47, no: 21, threshold: 0.6666 }
+                title: "Constitutional Amendment Procedure Referendum", question: "Do you support amending the Constitution to allow constitutional amendments to be passed by a two-thirds majority in both the House of Assembly and the Senate, without requiring a national referendum?", yes: 58, no: 9, threshold: 0.5 },
+            { title: "Electoral Districts Implementation Referendum", question: "Should the Republic allow for proportional local districts within a proportionally representative system?", yes: 46, no: 21, threshold: 0.6666 }
         ];
 
         const districts = [
@@ -473,8 +473,8 @@
                         ]
                     }
                 ],
-                atLargeVotes: { "Rights to All Booze": 5, "Harlon Progress Party": 4, "New Initiative": 0 },
-                referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 8, no: 1 }, { title: "Electoral Districts Implementation Referendum", yes: 7, no: 2 }],
+                atLargeVotes: { "Rights to All Booze": 4, "Harlon Progress Party": 4, "New Initiative": 0 },
+                referendumVotes: [{ title: "Constitutional Amendment Procedure Referendum", yes: 7, no: 1 }, { title: "Electoral Districts Implementation Referendum", yes: 6, no: 2 }],
                 spoiltBallots: [
                     {
                         content: "DISTRICT<br>Westray (Rank 1)<br>Kr4ka (Rank 2)<br>Nexalin (Rank 3)",
@@ -483,10 +483,10 @@
                         justification: "Not on voter roll"
                     },
                     {
-                        content: "No district vote",
+                        content: "AT-LARGE<br>BAR<br><br>Const. Amendment Procedure: yes<br>Electoral Districts Implementation: yes",
                         scope: "District",
                         bookStatus: "Signed",
-                        justification: "District vote not counted / Not on voter roll"
+                        justification: "Not eligible to vote"
                     },
                     {
                         content: "No district vote",
